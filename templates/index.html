@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--优先使用webkit内核渲染-->
+    <meta name="renderer" content="webkit">
+    <!--不要被百度转码-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <!--以下才是引入amazeui资源-->
+    <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css">
+    <link href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.css" rel="stylesheet">
+
+    <script src="https://cdn.bootcss.com/clipboard.js/2.0.0/clipboard.min.js"></script>
+
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+    <!-- local css -->
+    <link rel="stylesheet" href="css/detail.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+</head>
+<body>
+
+<div id="app" class="fd-whole am-text-sm">
+
+    <div class="header-nav am-vertical-align">
+        <div class="am-g am-vertical-align-middle">
+            <div class="am-u-sm-1">
+                <a href="index.html" style="color: #df66ff;">
+                    <button class="am-btn am-btn-default am-round" style="background-color: transparent!important;border: none!important;">
+                        <span class="am-icon-chevron-left"></span>
+                    </button>
+                </a>
+            </div>
+            <div class="am-u-sm-7"></div>
+            <div class="am-u-sm-4 am-g">
+                <button class="am-btn am-btn-default am-round"><span class="am-icon-search"></span></button>
+                <button class="am-btn am-btn-default am-round"
+                        data-am-modal="{target: '#show-wechat-qr', closeViaDimmer: 0, width: 300, height: 250}">
+                    <span class="am-icon-weixin"></span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹出微信二维码的model -->
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="show-wechat-qr">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd"><span class="am-text-sm">♪扫一扫关注更多优惠活动♪</span>
+                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+            </div>
+            <div class="am-modal-bd">
+                <div class="am-g am-margin-top-lg">
+                    <div class="am-u-sm-6">
+                        <figure data-am-widget="figure" class="am am-figure am-figure-default "
+                                data-am-figure="{  pureview: 'true' }">
+                            <img src="http://ommwypwud.bkt.clouddn.com/WechatIMG10.jpeg" width="100%"
+                                 data-rel="http://ommwypwud.bkt.clouddn.com/WechatIMG10.jpeg">
+                        </figure>
+                        <a>关注公众号</a>
+                    </div>
+                    <div class="am-u-sm-6">
+                        <figure data-am-widget="figure" class="am am-figure am-figure-default "
+                                data-am-figure="{  pureview: 'true' }">
+                            <img src="http://ommwypwud.bkt.clouddn.com/WechatIMG10.jpeg" width="100%"
+                                 data-rel="http://ommwypwud.bkt.clouddn.com/WechatIMG10.jpeg">
+                        </figure>
+                        <a>关注客服微信</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="top-area">
+        <div class="fd-detail am-cf am-gallery am-gallery-default" data-am-widget="gallery"
+             data-am-galaery="{pureview: true}">
+            <div class="left-area am-fl">
+                <div class="fd-img-shadow-radius" style="width: 375px;">
+                    <img src="{{imgurl}}" style="border-radius: 4px;" width="100%">
+                    
+                </div>
+            </div>
+            <div class="right-area">
+                <div class="am-margin-bottom-sm good-title">
+                    <strong class="am-text-sm">{{title}}</strong>
+                </div>
+
+                <div class="am-btn-group am-btn-group-xs label-coupons">
+                    <button type="button" class="am-btn am-btn-success am-round">包邮
+                    </button>
+                    <button type="button" class="am-btn am-btn-warning am-round"><strong>券￥{{coupons}}</strong></button>
+                </div>
+                <div class="am-text-xs" style="margin-top: 10px;color: #f42f34;;">
+                    券后<span class="am-text-lg"><strong>￥{{price}}</strong></span>
+                </div>
+                <div class="">
+                    <span class="fd-text-sm-gray am-fl" style="text-decoration: line-through">在售价 {{coupons}}</span>
+                    <span class="fd-text-sm-gray am-fr">{{sale_num}}</span>
+                </div>
+            </div>
+        </div>
+
+        <hr data-am-widget="divider" style="" class="am-divider am-divider-dotted"/>
+        <div class="am-cf">
+            <p class="fd-text-sm-gray">推荐理由：{{reason}}</p>
+        </div>
+    </div>
+
+
+    <!-- 复制口令区域 -->
+    <div class="kl-area">
+        <!--二合一口令开始-->
+        <div class="am-margin-horizontal-sm">
+            <div class="fd-kl-box am-text-center am-cf">
+                <div class="fd-explain am-center am-text-center">
+                    <span class="am-padding-horizontal-sm fd-text-no-wrap">长按框内 &gt; 全选 &gt; 复制</span>
+                </div>
+                <div class="fd-kl">
+                    <textarea id="copy_key" type="text"
+                              class="am-form-field am-text-center am-text-sm" style="color: #37cb71!important;" oninput="regain();"
+                              data-words="">{{title}}&#10;【原价】{{price}}元;&#10;【券后】{{price}}元;&#10;【省】{{coupons}}元&#10;复制框内整段文字，打开「手掏」即可「领取秘券」并购买{{price}}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="copy_words" style="margin-top: 45px">
+            <!--<textarea class="share_content am-margin-bottom am-badge-success am-badge" id="share_content"></textarea>-->
+            <div class="am-text-center am-margin-top-sm ">
+                <!--<div id="test">fuck man.</div>-->
+                <a class="copyBtn" data-clipboard-action="copy" data-clipboard-target="#copy_key">
+                    <button class="am-btn am-btn-success am-round fd-btn-gradient-green" @click="copyKL">{{price}}</button>
+                </a>
+                <button class="am-btn am-btn-success am-round fd-btn-gradient-green" style="margin-left: 10px" @click="saveQRToLocal">保存二维码到本地</button>
+                <div class="am-margin-top-sm am-text-xs am-text-primary am-margin-horizontal-sm">点击复制后，请打开手机淘宝购买！
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <h4 class="am-panel-title am-collapse am-in show-detail" style="background-color: white; padding: 10px"
+            data-am-collapse="{parent: '#collapase-nav-1', target: '#tab1'}">
+            商品详情<span class="am-text-success am-text-xs">(点击展开，点击图片收起)</span>
+            <i class="am-fr am-icon-sm am-icon-angle-right" id="change_icon"></i>
+
+            <div class="am-panel-collapse am-collapse am-fade am-animation-scale-up" id="tab1" v-for="img in goodsDetailImages">
+                <div v-for="img in goodsDetailImages">
+                    <img :src="img"/>
+                </div>
+            </div>
+        </h4>
+    </div>
+
+
+</div>
+
+<script>
+    console.log('fucking copy');
+    var clipboard = new ClipboardJS('.copyBtn').on('success', function(e) {
+        var e = e || window.event;
+        console.log(e);
+    }).on('error', function(e) {
+        console.log('fucking copy error');
+        console.log(e)
+    });
+</script>
+
+<script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script>
+<script src="js/common.js"></script>
+<script src="scripts/gooddetail.js"></script>
+
+</body>
+</html>
